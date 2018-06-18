@@ -51,5 +51,6 @@ exports.default = {
   ignoreTab: _propTypes2.default.bool,
   label: _propTypes2.default.string,
   autoComplete: _propTypes2.default.string,
-  minLength: _propTypes2.default.number
+  minLength: _propTypes2.default.number,
+  searchSuffix: _propTypes2.default.string
 };
