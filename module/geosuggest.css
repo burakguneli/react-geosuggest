@@ -52,7 +52,8 @@
 .geosuggest__item {
   font-size: 18px;
   font-size: 1rem;
-  padding: .5em .65em;
+  padding: .5em 0;
+  border-bottom: 1px solid #dedee0;
   cursor: pointer;
 }
 .geosuggest__item:hover,
@@ -66,7 +67,4 @@
 .geosuggest__item--active:hover,
 .geosuggest__item--active:focus {
   background: #ccc;
-}
-.geosuggest__item__matched-text {
-  font-weight: bold;
 }
