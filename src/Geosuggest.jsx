@@ -351,9 +351,11 @@ class Geosuggest extends React.Component {
    * @param {GeosuggestItem} suggest The selected suggest item
    */
   selectSuggest = suggest => {
+    const finalInput = this.state.userInput + ' ' + this.props.searchSuffix;
+
     if (!suggest) {
       suggest = {
-        label: this.state.userInput
+        label: finalInput
       };
     }
 
