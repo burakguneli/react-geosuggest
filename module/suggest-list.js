@@ -118,7 +118,8 @@ var SuggestList = function (_React$Component) {
             onMouseOut: _this2.props.onSuggestMouseOut,
             onSelect: _this2.props.onSuggestSelect,
             renderSuggestItem: _this2.props.renderSuggestItem });
-        })
+        }),
+        this.props.children
       );
     }
   }]);

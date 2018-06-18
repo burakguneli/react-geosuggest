@@ -257,6 +257,7 @@ class Geosuggest extends React.Component {
         suggests.push({
           description: suggest.description,
           label: this.props.getSuggestLabel(suggest),
+          location: suggest.location,
           placeId: suggest.place_id,
           isFixture: false,
           matchedSubstrings: suggest.matched_substrings[0]
@@ -439,7 +440,7 @@ class Geosuggest extends React.Component {
         onPrev={this.onPrev}
         onSelect={this.onSelect}
         onEscape={this.hideSuggests} {...attributes} />,
-      suggestionsList = <SuggestList isHidden={this.state.isSuggestsHidden}
+      suggestionsList = (<SuggestList isHidden={this.state.isSuggestsHidden}
         style={this.props.style.suggests}
         suggestItemStyle={this.props.style.suggestItem}
         userInput={this.state.userInput}
@@ -455,7 +456,9 @@ class Geosuggest extends React.Component {
         onSuggestMouseOut={this.onSuggestMouseOut}
         onSuggestSelect={this.selectSuggest}
         renderSuggestItem={this.props.renderSuggestItem}
-        minLength={this.props.minLength}/>;
+        minLength={this.props.minLength}>
+            {this.props.children}
+    </SuggestList>);
 
     return <div className={classes}>
       <div className="geosuggest__input-wrapper">

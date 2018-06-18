@@ -72,6 +72,8 @@ export default class SuggestList extends React.Component {
           onSelect={this.props.onSuggestSelect}
           renderSuggestItem={this.props.renderSuggestItem}/>;
       })}
+
+      {this.props.children}
     </ul>;
   }
 }

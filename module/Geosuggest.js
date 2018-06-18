@@ -381,6 +381,7 @@ var Geosuggest = function (_React$Component) {
           suggests.push({
             description: suggest.description,
             label: _this3.props.getSuggestLabel(suggest),
+            location: suggest.location,
             placeId: suggest.place_id,
             isFixture: false,
             matchedSubstrings: suggest.matched_substrings[0]
@@ -547,23 +548,27 @@ var Geosuggest = function (_React$Component) {
         onPrev: this.onPrev,
         onSelect: this.onSelect,
         onEscape: this.hideSuggests }, attributes)),
-          suggestionsList = _react2.default.createElement(_suggestList2.default, { isHidden: this.state.isSuggestsHidden,
-        style: this.props.style.suggests,
-        suggestItemStyle: this.props.style.suggestItem,
-        userInput: this.state.userInput,
-        isHighlightMatch: this.props.highlightMatch,
-        suggestsClassName: this.props.suggestsClassName,
-        suggestItemClassName: this.props.suggestItemClassName,
-        suggests: this.state.suggests,
-        hiddenClassName: this.props.suggestsHiddenClassName,
-        suggestItemActiveClassName: this.props.suggestItemActiveClassName,
-        activeSuggest: this.state.activeSuggest,
-        onSuggestNoResults: this.onSuggestNoResults,
-        onSuggestMouseDown: this.onSuggestMouseDown,
-        onSuggestMouseOut: this.onSuggestMouseOut,
-        onSuggestSelect: this.selectSuggest,
-        renderSuggestItem: this.props.renderSuggestItem,
-        minLength: this.props.minLength });
+          suggestionsList = _react2.default.createElement(
+        _suggestList2.default,
+        { isHidden: this.state.isSuggestsHidden,
+          style: this.props.style.suggests,
+          suggestItemStyle: this.props.style.suggestItem,
+          userInput: this.state.userInput,
+          isHighlightMatch: this.props.highlightMatch,
+          suggestsClassName: this.props.suggestsClassName,
+          suggestItemClassName: this.props.suggestItemClassName,
+          suggests: this.state.suggests,
+          hiddenClassName: this.props.suggestsHiddenClassName,
+          suggestItemActiveClassName: this.props.suggestItemActiveClassName,
+          activeSuggest: this.state.activeSuggest,
+          onSuggestNoResults: this.onSuggestNoResults,
+          onSuggestMouseDown: this.onSuggestMouseDown,
+          onSuggestMouseOut: this.onSuggestMouseOut,
+          onSuggestSelect: this.selectSuggest,
+          renderSuggestItem: this.props.renderSuggestItem,
+          minLength: this.props.minLength },
+        this.props.children
+      );
 
       return _react2.default.createElement(
         'div',
