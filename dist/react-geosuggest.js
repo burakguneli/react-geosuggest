@@ -1,6 +1,6 @@
-(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.Geosuggest = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.Geosuggest = f()}})(function(){var define,module,exports;return (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 /*!
-  Copyright (c) 2016 Jed Watson.
+  Copyright (c) 2017 Jed Watson.
   Licensed under the MIT License (MIT), see
   http://jedwatson.github.io/classnames
 */
@@ -22,8 +22,11 @@
 
 			if (argType === 'string' || argType === 'number') {
 				classes.push(arg);
-			} else if (Array.isArray(arg)) {
-				classes.push(classNames.apply(null, arg));
+			} else if (Array.isArray(arg) && arg.length) {
+				var inner = classNames.apply(null, arg);
+				if (inner) {
+					classes.push(inner);
+				}
 			} else if (argType === 'object') {
 				for (var key in arg) {
 					if (hasOwn.call(arg, key) && arg[key]) {
@@ -37,6 +40,7 @@
 	}
 
 	if (typeof module !== 'undefined' && module.exports) {
+		classNames.default = classNames;
 		module.exports = classNames;
 	} else if (typeof define === 'function' && typeof define.amd === 'object' && define.amd) {
 		// register as 'classnames', consistent with npm package name
@@ -824,6 +828,10 @@ process.off = noop;
 process.removeListener = noop;
 process.removeAllListeners = noop;
 process.emit = noop;
+process.prependListener = noop;
+process.prependOnceListener = noop;
+
+process.listeners = function (name) { return [] }
 
 process.binding = function (name) {
     throw new Error('process.binding is not supported');
@@ -1802,9 +1810,11 @@ var Geosuggest = function (_React$Component) {
     };
 
     _this.selectSuggest = function (suggest) {
+      var finalInput = _this.state.userInput + ' ' + _this.props.searchSuffix;
+
       if (!suggest) {
         suggest = {
-          label: _this.state.userInput
+          label: finalInput
         };
       }
 
@@ -1970,10 +1980,11 @@ var Geosuggest = function (_React$Component) {
         return;
       }
 
+      var finalInput = this.state.userInput + ' ' + this.props.searchSuffix;
       var options = {
-        input: this.state.userInput
+        input: finalInput
       },
-          inputLength = this.state.userInput.length,
+          inputLength = finalInput.length,
           isShorterThanMinLength = inputLength < this.props.minLength;
 
       if (isShorterThanMinLength) {
@@ -2019,8 +2030,9 @@ var Geosuggest = function (_React$Component) {
       var suggestsGoogle = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
       var callback = arguments[1];
 
+      var finalInput = this.state.userInput + ' ' + this.props.searchSuffix;
       var suggests = [],
-          userInput = this.state.userInput,
+          userInput = finalInput,
           regex = new RegExp(escapeRegExp(userInput), 'gim'),
           skipSuggest = this.props.skipSuggest,
           maxFixtures = this.props.maxFixtures,
@@ -2569,7 +2581,7 @@ Input.defaultProps = {
   ignoreTab: false,
   onKeyDown: function onKeyDown() {},
   onKeyPress: function onKeyPress() {},
-  autoComplete: 'off'
+  autoComplete: 'nope'
 };
 
 exports.default = Input;
@@ -2628,7 +2640,8 @@ exports.default = {
   ignoreTab: _propTypes2.default.bool,
   label: _propTypes2.default.string,
   autoComplete: _propTypes2.default.string,
-  minLength: _propTypes2.default.number
+  minLength: _propTypes2.default.number,
+  searchSuffix: _propTypes2.default.string
 };
 
 },{"prop-types":11}],20:[function(require,module,exports){
@@ -2791,7 +2804,7 @@ var SuggestItem = function (_React$Component) {
       var content = suggest.label;
 
       if (this.props.renderSuggestItem) {
-        content = this.props.renderSuggestItem(suggest);
+        content = this.props.renderSuggestItem(suggest, this.props.userInput);
       } else if (this.props.isHighlightMatch) {
         content = this.formatMatchedText(this.props.userInput, suggest);
       }

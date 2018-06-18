@@ -1,3 +1,19 @@
+### 2.7.1 (2018-06-18)
+
+
+#### Bug Fixes
+
+* **autoComplete prop default value:** Change default value from off (which Chrome and other modern browsers ignore) to ([462bd357](https://github.com/ubilabs/react-geosuggest/commit/462bd357599828a6b7041ca6efb9e68f251d3a3c))
+
+
+### 2.7.1 (2018-06-18)
+
+
+#### Bug Fixes
+
+* **autoComplete prop default value:** Change default value from off (which Chrome and other modern browsers ignore) to ([462bd357](https://github.com/ubilabs/react-geosuggest/commit/462bd357599828a6b7041ca6efb9e68f251d3a3c))
+
+
 ## 2.7.0 (2017-12-11)
 
 
