@@ -178,10 +178,11 @@ class Geosuggest extends React.Component {
       return;
     }
 
+    const finalInput = this.state.userInput + ' ' + this.props.searchSuffix;
     const options = {
-        input: this.state.userInput
+        input: finalInput
       },
-      inputLength = this.state.userInput.length,
+      inputLength = finalInput.length,
       isShorterThanMinLength = inputLength < this.props.minLength;
 
     if (isShorterThanMinLength) {
@@ -224,8 +225,9 @@ class Geosuggest extends React.Component {
    * @param {Function} callback Called once the state has been updated
    */
   updateSuggests(suggestsGoogle = [], callback) {
+    const finalInput = this.state.userInput + ' ' + this.props.searchSuffix;
     var suggests = [],
-      userInput = this.state.userInput,
+      userInput = finalInput,
       regex = new RegExp(escapeRegExp(userInput), 'gim'),
       skipSuggest = this.props.skipSuggest,
       maxFixtures = this.props.maxFixtures,
